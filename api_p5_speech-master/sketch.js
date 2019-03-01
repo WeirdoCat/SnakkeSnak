@@ -1,4 +1,3 @@
-
 let words = [];
 let sentence = "";
 let resultP;
@@ -7,6 +6,7 @@ let counter;
 let cnv, myRec, btn, txt;
 
 function setup() {
+    //woohoo der er sket noget
     let SpeechRecognition = window.webkitSpeechRecognition ||
         window.mozSpeechRecognition ||
         window.msSpeechRecognition ||
@@ -47,8 +47,7 @@ function showResult() {
         sentence = myRec.resultString;
         resultP.html(sentence);
 
-        if (sentence.includes("orange")) {
-        }
+        if (sentence.includes("orange")) {}
 
     }
 }
