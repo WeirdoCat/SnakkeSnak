@@ -1,10 +1,12 @@
 //Make a small drawing program with p5 speech 
 //reference: http://ability.nyu.edu/p5.js-speech/
 
-let myRec, browserCompatible, pen, direction, displayWord, dab;
-
+let myRec, browserCompatible, pen, direction, displayWord, dab, timeSquare, squareAnimation;
+let houseAnimation, timeHouse;
 
 function setup() {
+    timeSquare = 1;
+    timeHouse = 1;
     cnv = createCanvas(400, 400);
     background('red');
     //Check browser compatibility
@@ -27,7 +29,7 @@ function setup() {
         x: width / 2,
         y: height / 2,
         size: 20,
-        col: color(255, 255, 255, 150),
+        col: color(random(255), random(255), random(255), 150),
         show: function () {
             fill(this.col);
             ellipseMode(CENTER);
@@ -53,10 +55,20 @@ function setup() {
 }
 
 function draw() {
+    square();
+    house();
     if (direction == "left") pen.x -= 1
     if (direction == "up") pen.y -= 1
     if (direction == "right") pen.x += 1
     if (direction == "down") pen.y += 1
+    if (direction == "ur") {
+        pen.x += 1
+        pen.y -= 1
+    }
+    if (direction == "dr") {
+        pen.x += 1
+        pen.y += 1
+    }
     if (dab == "bigger") pen.size += 1
     if (dab == "small") pen.size -= 1
 
@@ -76,6 +88,14 @@ function showResult() {
             case "right":
                 direction = "right"
                 break;
+                case "square":
+               squareAnimation = true
+                break;
+
+                case "house":
+               houseAnimation = true
+                break;
+
             case "up":
                 direction = "up"
                 break;
@@ -98,39 +118,37 @@ function showResult() {
     }
 }
 
+function square(){
+  
+  if(squareAnimation == true){  
+      if(timeSquare<60*3*6)timeSquare++
 
-/*
-OPGAVER 
+  if(timeSquare <= 60*3)  direction = "left";
+  else if (timeSquare < 60*3*2) direction = "up";
+  else if (timeSquare < 60*3*3) direction = "right";
+  else if (timeSquare < 60*3*4) direction = "down";
+  else if (timeSquare < 60*3*5) direction = "left";
+  else{ direction = "stop";
+  squareAnimation = false;
+  timeSquare = 1;
 
-Vi skal forsøge at lave et lille tegneprogram, som bruger stemmegenkendelse til at føre pennen rundt på skærmen. 
+}
+}
+}
+function house(){
+  
+    if(houseAnimation == true){  
+        if(timeHouse<60*3*6)timeHouse++
+  
+    if(timeHouse <= 60*2)  direction = "left";
+    else if (timeHouse < 60*4) direction = "up";
+    else if (timeHouse < 60*5) direction = "ur";
+    else if (timeHouse < 60*6) direction = "dr";
+    else if (timeHouse < 60*8) direction = "down";
+    else{ direction = "stop";
+  houseAnimation = false;
+  houseSquare = 1;
 
-Det første vi gør er at lave et objekt, pen, med Javascript Object notation. Objektet skal have følgende properties og metoder:
-
-x, y, size, col
-show() - metode som laver fill(this.col), og viser en ellipse(this.x, this.y, this.size, this.size)
-
-Se hvordan her: https://www.w3schools.com/jS/js_objects.asp
-
-Objektet skal laves i setup() - og metoden pen.show() skal kaldes i draw() 
-
-Nu skal vi så bruge variablen word til at flytte rundt på objektet. Til det skal vi bruge et såkaldt switch statement i draw. 
-
-Læs dokumentationen her - og se om du kan sørge for at ordene 'left', 'right', 'up', 'down' flytter vores pen rundt
-https://www.w3schools.com/js/js_switch.asp
-
-Se så om du kan tilføje endnu en metode i objektet - bounce - som sørger for at pennen ikke kommer længere, 
-når x er mindre end nul eller større end bredden. Og tilsvarende for y.
-
-Bemærk at der findes en smart måde at skrive comditions på, således:
-
-a = a < 0 ? 0 : a;
-
-Som betyder - sæt a til (er a mindre end nul?) 0, ellers a
-
-_ _ _ _ _ _ _ _
-
-Se om du kan lave programmet så man kan skifte farver - ved for eksempel at sige green, red, blue
-
-Se om du kan lave programmet så man kan skifte størrelse ved at sige bigger, smaller
-
-*/
+}
+  }
+  }
